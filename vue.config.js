@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: '/ywc18-wp-hw/',
   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
 
