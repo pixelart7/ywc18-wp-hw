@@ -1,14 +1,14 @@
 <template lang="pug">
 .radio-group
-  .radio(v-for="l in list" :key="`key-radio-${internalId}-${l}`")
+  .radio(v-for="l in list" :key="`key-radio-${internalId}-${encodeValue(l)}`")
     input.hidden(
-      :id="`radio-${internalId}-${l}`"
+      :id="`radio-${internalId}-${encodeValue(l)}`"
       type="radio"
       :value="l"
       :checked="l === modelValue"
       @change="$emit('update:modelValue', $event.target.value)"
     )
-    label.flex.cursor-pointer.py-1(:for="`radio-${internalId}-${l}`")
+    label.flex.cursor-pointer.py-1(:for="`radio-${internalId}-${encodeValue(l)}`")
       .w-5.flex.justify-center.items-center.pointer-events-none
         .radio-circle.w-4.h-4.border.rounded-full.flex.justify-center.items-center
           .radio-inner-circle.bg-light-blue-500.rounded-full.w-2.h-2
@@ -19,6 +19,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+import SparkMD5 from 'spark-md5';
 
 const generateString = (length: number) => Array(length).fill('').map(() => Math.random().toString(36).charAt(2)).join('');
 
@@ -33,8 +35,16 @@ const Checkbox = defineComponent({
     },
   },
   setup() {
+    const cache: { [key: string]: string } = {};
+
     return {
       internalId: generateString(4),
+      encodeValue(val: string) {
+        if (!(val in cache)) {
+          cache[val] = SparkMD5.hash(val);
+        }
+        return cache[val];
+      },
     };
   },
 });

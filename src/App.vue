@@ -18,6 +18,12 @@ export default App;
 
 body {
   font-size: 15px;
+  background: url('~@/assets/bg.jpg');
+  @apply bg-cover;
+}
+
+[placeholder]{
+  @apply overflow-ellipsis;
 }
 // .app {}
 </style>
