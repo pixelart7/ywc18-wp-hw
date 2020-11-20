@@ -1,6 +1,6 @@
 <template lang="pug">
 .home.pb-24
-  .h-16.sticky.top-0.bg-white.border-b.border-primary-500
+  .h-16.sticky.top-0.z-20.bg-white.border-b.border-primary-500
     .max-w-container.mx-auto.px-4.flex.items-center.h-full
       img.h-10.mr-12.hidden(class="md:block" src="@/assets/logo.png")
       img.h-10.mr-3.block(class="md:hidden" src="@/assets/logo-mobile.png")
@@ -111,7 +111,6 @@ const Home = defineComponent({
     const isFilterShow = ref(false);
     const filterElement = ref(null);
     watch(isFilterShow, (newVal) => {
-      console.log(filterElement.value);
       if (filterElement.value) {
         if (newVal) { // Show
           disableBodyScroll(filterElement.value as unknown as Element);
